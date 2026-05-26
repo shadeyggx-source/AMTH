@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMTH Bot — Legal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --border: #1e2330;
+      --accent: #5b8eff;
+      --accent2: #ff6b6b;
+      --text: #e4e8f0;
+      --muted: #6b7280;
+      --heading: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13,15,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--heading);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    header {
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(91,142,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(91,142,255,0.1);
+      border: 1px solid rgba(91,142,255,0.3);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--heading);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.375rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(91,142,255,0.35);
+    }
+
+    .tab:hover:not(.active) { color: var(--text); }
+
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .effective {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .effective::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    section.block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    section.block:hover { border-color: rgba(91,142,255,0.3); }
+
+    section.block h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    section.block h2 .num {
+      font-size: 0.7rem;
+      background: rgba(91,142,255,0.12);
+      color: var(--accent);
+      border-radius: 5px;
+      padding: 0.15rem 0.45rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    section.block p {
+      font-size: 0.925rem;
+      color: #9aa5b8;
+      line-height: 1.8;
+    }
+
+    section.block ul {
+      margin-top: 0.75rem;
+      padding-left: 1.25rem;
+      font-size: 0.925rem;
+      color: #9aa5b8;
+      line-height: 2;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AMTH<span>.</span>bot</div>
+  <ul class="nav-links">
+    <li><a href="#tos">Terms</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+  </ul>
+</nav>
+
+<header>
+  <div class="badge">Legal Docs</div>
+  <h1>Bot Policies</h1>
+  <p class="subtitle">Terms of Service and Privacy Policy for the AMTH Discord moderation bot.</p>
+</header>
+
+<main>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('tos', this)">Terms of Service</button>
+    <button class="tab" onclick="switchTab('privacy', this)">Privacy Policy</button>
+  </div>
+
+  <!-- TERMS OF SERVICE -->
+  <div class="panel active" id="tos">
+    <div class="effective">Effective Date: May 26, 2026</div>
+
+    <section class="block">
+      <h2><span class="num">01</span> Acceptance of Terms</h2>
+      <p>By using the AMTH bot ("the Bot") in any Discord server, you agree to these Terms of Service. If you do not agree, please remove or stop using the Bot immediately.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">02</span> Description of Service</h2>
+      <p>AMTH is a Discord bot designed for moderation purposes within Adopt Me community servers. Features include, but are not limited to:</p>
+      <ul>
+        <li>Banning, kicking, muting, and warning users</li>
+        <li>Message filtering and auto-moderation</li>
+        <li>Moderation logs and audit trails</li>
+        <li>Role management utilities</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">03</span> Permitted Use</h2>
+      <p>You may only use the Bot for lawful purposes and in accordance with Discord's Terms of Service. You agree not to use the Bot to harass, threaten, or abuse other users, or to perform any actions that violate Discord's Community Guidelines.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">04</span> Server Administrator Responsibilities</h2>
+      <p>Server administrators who add the Bot to their server are responsible for ensuring it is used appropriately. Misuse of moderation commands to target users unfairly is solely the responsibility of those administrators and moderators.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">05</span> Availability & Modifications</h2>
+      <p>We reserve the right to modify, suspend, or discontinue the Bot at any time without notice. We are not liable for any downtime or loss of service.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">06</span> Termination</h2>
+      <p>We reserve the right to terminate or restrict access to the Bot for any server or user that violates these Terms, at our sole discretion.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">07</span> Disclaimer</h2>
+      <p>The Bot is provided "as is" without warranties of any kind. We are not responsible for any damages resulting from the use or inability to use the Bot.</p>
+    </section>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="panel" id="privacy">
+    <div class="effective">Effective Date: May 26, 2026</div>
+
+    <section class="block">
+      <h2><span class="num">01</span> What Data We Collect</h2>
+      <p>The AMTH Bot may collect and temporarily store the following data to perform moderation functions:</p>
+      <ul>
+        <li>Discord User IDs and usernames</li>
+        <li>Server (Guild) IDs</li>
+        <li>Message content (only when required for moderation actions)</li>
+        <li>Moderation action logs (bans, kicks, warns, mutes)</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">02</span> How We Use Your Data</h2>
+      <p>Data collected is used exclusively to provide moderation functionality. This includes logging moderation actions, enforcing server rules, and maintaining audit trails for server administrators. We do not use your data for advertising or sell it to third parties.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">03</span> Data Storage & Retention</h2>
+      <p>Data is stored securely and retained only as long as necessary to provide the service. Moderation logs may be retained for the lifetime of the Bot's presence in a server. When the Bot is removed from a server, associated data may be deleted upon request.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">04</span> Data Sharing</h2>
+      <p>We do not share, sell, or trade your data with any third parties. Data is only accessible to the Bot's developer and, where applicable, the server administrators of servers where the Bot operates.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">05</span> Your Rights</h2>
+      <p>You may request deletion of your data at any time by contacting the Bot's developer through the AMTH Discord server. We will respond to data deletion requests within a reasonable timeframe.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">06</span> Third-Party Services</h2>
+      <p>The Bot operates on Discord's platform and is subject to Discord's own Privacy Policy. We are not responsible for data handling practices by Discord Inc.</p>
+    </section>
+
+    <section class="block">
+      <h2><span class="num">07</span> Changes to This Policy</h2>
+      <p>We may update this Privacy Policy at any time. Continued use of the Bot after changes constitutes acceptance of the updated policy. It is your responsibility to review this page periodically.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 <strong>AMTH Bot</strong> — All rights reserved. &nbsp;·&nbsp; Questions? Reach us in the AMTH Discord server.
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
