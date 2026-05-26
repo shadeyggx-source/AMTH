@@ -1,0 +1,2 @@
+# AMTH
+Guidelines of AMTH
